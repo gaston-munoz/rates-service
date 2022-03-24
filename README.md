@@ -2,6 +2,10 @@
 
 Backend service for create rates based in Fixer API
 
+## Docs
+
+The OpenAPI docs are in the docs folder and it is possible build a Postman collection by importing the swagger file.
+
 
 ## Initiate 🚀
 

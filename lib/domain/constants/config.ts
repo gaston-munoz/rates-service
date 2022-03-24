@@ -1,8 +1,8 @@
 export const config = Object.freeze({
     exchange: {
-        baseUrl: 'http://data.fixer.io/api',
+        baseUrl: process.env.EXCHANGE_BASE_URL,
         baseCurrency: 'EUR',
-        accessKey: '824e753b9d8f1bf170e5adf80e7788e9',
+        accessKey: process.env.EXCHANGE_ACCESS_KEY,
         timeout: 15000,
         headers: {'Content-Type': 'application/json'} ,
     }

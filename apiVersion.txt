@@ -4,7 +4,7 @@ info:
   title: Rates Service API Rest
   description: 'Development API - last update: 2022-06-01 '
 servers:
-  - url: 'https://ec2-54-89-74-179.compute-1.amazonaws.com/api'
+  - url: 'http://ec2-54-89-74-179.compute-1.amazonaws.com/api'
     description: '-      Development enviroment'
 paths:
   /rates:

@@ -1,0 +1,1 @@
+export { ratesCtlr } from './rates.controller'

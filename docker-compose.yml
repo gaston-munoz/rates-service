@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    rates-api:
+        container_name: rates-api
+        restart: always
+        build: .
+        environment:
+            - NODE_ENV=PROD
+        ports:
+            - '3000:3000'
+        links:
+            - mongo:mongo
+
+    mongo:
+        container_name: mongo
+        image: mongo
+        restart: always
+        ports: 
+            - '27017:27017'
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: gaston
+        volumes:
+            - mongo-data:/data/db
+    
+volumes:
+    mongo-data:

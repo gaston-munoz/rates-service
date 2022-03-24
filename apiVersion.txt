@@ -1,0 +1,192 @@
+openapi: 3.0.0
+info:
+  version: 2.0.0-oas3
+  title: Rates Service API Rest
+  description: 'Development API - last update: 2022-06-01 '
+servers:
+  - url: 'https://ec2-54-89-74-179.compute-1.amazonaws.com/api'
+    description: '-      Development enviroment'
+paths:
+  /rates:
+    get:
+      tags:
+        - Rates
+      summary: Get all rates generated
+      description: ''
+      responses:
+        '200':
+          description: successfully operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: 'true'
+                  rates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/rate'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internal_server_error'
+
+    post:
+      tags:
+        - Rates
+      summary: Create a rate
+      description: ''
+      requestBody:
+        $ref: '#/components/requestBodies/rate'
+      responses:
+        '200':
+          description: successfully operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response_rate'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bad_request'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internal_server_error'
+
+  /rates/{id}/fee:
+    post:
+      tags:
+        - Rates
+      summary: Add fee to rate
+      description: ''
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            example: 623bd16d663cdb0621c5a320
+      requestBody:
+        $ref: '#/components/requestBodies/fee'
+      responses:
+        '200':
+          description: successfully operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success_response_rate'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bad_request'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/not_found'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/internal_server_error'
+
+components:
+  requestBodies:
+    rate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              pair:
+                $ref: '#/components/schemas/pair'
+    fee:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fee:
+                $ref: '#/components/schemas/fee'
+
+  schemas:
+    rate:
+      type: object
+      example:
+          pair: 'ARS-USD'
+          fee: 0.1
+          feeAmount: 10
+          totalRate: 110
+          originalRate: 100
+          _id: 623bd16d663cdb0621c5a320
+      
+    pair:
+      type: string
+      example: 'USD-ARS'
+      
+    fee: 
+      type: number
+      example: 0.1
+        
+    bad_request:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        message:
+          type: string
+          example: Invalid request payload input
+  
+    success_response_rate: 
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        rate:
+          $ref: '#/components/schemas/rate'
+
+
+    not_found:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not Found
+        statusCode:
+          type: number
+          example: 404
+        error:
+          type: string
+          example: Not Found
+
+    internal_server_error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Database not accessible
+        error:
+          type: string
+          example: Internal Server Error
+        statusCode:
+          type: number
+          example: 500          
+          
